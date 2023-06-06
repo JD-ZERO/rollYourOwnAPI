@@ -1,0 +1,100 @@
+[[T9:[[?:::::::::::::: getTeamraisersByCustom :::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  ::
+  ::  Roll Your Own API -- getTeamraisersByCustom
+  ::
+  ::  Returns S42 tags of specified trID, emulating a getTeamraisersByInfo/Distance
+  ::  call (but with an event ID instead of a zip or name).
+  ::
+  ::  URL Params:
+  ::    pgwrap=n   ........always required on RYO requests (to avoid wrapper HTML)
+  ::    callback=_________   ...optional, can be anything
+  ::    trID=____   ...TeamRaiser ID number for requested info
+  ::
+  ::  T8 == make a string safe for S130
+  ::  T6 == javascript escape
+  ::
+  ::  https://support.zerocancer.org/site/SPageNavigator/ryo_getTeamraisersByCustom?pgwrap=n&trID=____
+  ::
+  ::  At some point, might be worth adding a check for an API key or a whitelisted IP header check
+  ::  
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::]]
+[[U8:text/javascript]]
+
+[[?xx::x[[S334:trID]]x::
+{
+    "errorResponse": {
+        "code": "UNDEFINED",
+        "message": "No trID was specified."
+    }
+}
+::
+
+[[?xx::x[[E42:[[S334:trID]]:status]]x::
+{
+    "errorResponse": {
+        "code": "MISSING",
+        "message": "No system status for trID [[S334:trID]]. It's probably not a valid event."
+    }
+}
+::
+
+[[?xx::x[[S334:callback]]x::::[[S334:callback]](]]
+{
+    "street_address": [[?xx::x[[E42:[[S334:trID]]:street]]x::null::"[[T6:[[E42:[[S334:trID]]:street]]]]"]],
+    "country": [[?xx::x[[E42:[[S334:trID]]:country]]x::null::"[[T6:[[E42:[[S334:trID]]:country]]]]"]],
+    "distance": "0.0",
+    "city": [[?xx::x[[E42:[[S334:trID]]:city]]x::null::"[[T6:[[E42:[[S334:trID]]:city]]]]"]],
+    "mailingAddrAttn": [[?xx::x[[E42:[[S334:trID]]:_____________]]x::null::"[[T6:[[E42:[[S334:trID]]:_____________]]]]"]],
+    "county": [[?xx::x[[E42:[[S334:trID]]:county]]x::null::"[[T6:[[E42:[[S334:trID]]:county]]]]"]],
+    "last_modified_date": null,
+    "description": null,
+    "accepting_donations": "[[?x2x3x::x[[E42:[[S334:trID]]:status]]x::true::false]]",
+    "donate_event_url": [[?xx::x[[E42:[[S334:trID]]:form-id]]x::null::"https://support.zerocancer.org/site/Donation2?df_id=[[E42:[[S334:trID]]:form-id]]&FR_ID=[[S334:trID]]&PROXY_ID=[[S334:trID]]&[[E42:[[S334:trID]]:form-id]].donation=form1&PROXY_TYPE=21"]],
+    "event_date": "[[E130:
+       [[T8:[[E42:[[S334:trID]]:event-date]]-]] "/" "-" replaceall
+       dup dup 6 11 substring swap 0 3 substring concat
+       swap 3 5 substring concat]]",
+    "event_time": "[[E47:[[S334:trID]]:fr_info:1:event_schedule]]",
+    "fundraising_goal": [[?xx::x[[E42:[[S334:trID]]:goal]]x::null::"[[E130: [[T6:[[E42:[[S334:trID]]:goal]]]] "$" "" replaceall "," "" replaceall "." "" replaceall 100 * ]]"]],
+    "customized_url": [[?xx::x[[E42:[[S334:trID]]:customized-url]]x::null::"[[T6:[[E42:[[S334:trID]]:customized-url]]]]"]],
+    "id": "[[S334:trID]]",
+    "state": [[?xx::x[[E42:[[S334:trID]]:state]]x::null::"[[T6:[[E42:[[S334:trID]]:state]]]]"]],
+    "reg_new_team_url": "https://support.zerocancer.org/site/TRR/RunWalk?pg=tfind&fr_id=[[S334:trID]]&fr_tm_opt=new",
+    "mail_state": [[?xx::x[[E42:[[S334:trID]]:_____________]]x::null::"[[T6:[[E42:[[S334:trID]]:_____________]]]]"]],
+    "reg_indiv_url": "https://support.zerocancer.org/site/TRR/RunWalk?pg=tfind&fr_id=[[S334:trID]]&fr_tm_opt=none",
+    "zip": [[?xx::x[[E42:[[S334:trID]]:zip]]x::null::"[[T6:[[E42:[[S334:trID]]:zip]]]]"]],
+    "area": [[?xx::x[[E42:[[S334:trID]]:_____________]]x::null::"[[T6:[[E42:[[S334:trID]]:_____________]]]]"]],
+    "find_url": "https://support.zerocancer.org/site/TR/RunWalk?fr_id=[[S334:trID]]&pg=pfind",
+    "accepting_registrations": "[[?x1x2x::x[[E42:[[S334:trID]]:status]]x::true::false]]",
+    "greeting_url": "https://support.zerocancer.org/site/TR/RunWalk?fr_id=[[S334:trID]]&pg=entry",
+    "mail_street2": [[?xx::x[[E42:[[S334:trID]]:_____________]]x::null::"[[T6:[[E42:[[S334:trID]]:_____________]]]]"]],
+    "creation_date": null,
+    "mail_street1": [[?xx::x[[E42:[[S334:trID]]:_____________]]x::null::"[[T6:[[E42:[[S334:trID]]:_____________]]]]"]],
+    "mail_city": [[?xx::x[[E42:[[S334:trID]]:_____________]]x::null::"[[T6:[[E42:[[S334:trID]]:_____________]]]]"]],
+    "mail_zip": [[?xx::x[[E42:[[S334:trID]]:_____________]]x::null::"[[T6:[[E42:[[S334:trID]]:_____________]]]]"]],
+    "location_name": [[?xx::x[[E42:[[S334:trID]]:location-name]]x::null::"[[T6:[[E42:[[S334:trID]]:location-name]]]]"]],
+    "ecommerce_event_url": null,
+    "reg_join_team_url": "https://support.zerocancer.org/site/TRR/RunWalk?pg=tfind&fr_id=[[S334:trID]]",
+    "name": [[?xx::x[[E42:[[S334:trID]]:title]]x::null::"[[T6:[[E42:[[S334:trID]]:title]]]]"]],
+    "public_event_type_name": [[?xx::x[[E42:[[S334:trID]]:public-event-type]]x::{}::"{[[T6:[[E42:[[S334:trID]]:public-event-type]]]]}"]],
+    "region": [[?xx::x[[E42:[[S334:trID]]:_____________]]x::null::"[[T6:[[E42:[[S334:trID]]:_____________]]]]"]],
+    "status": "[[E42:[[S334:trID]]:status]]",
+    "custom": {
+        "days_to_event": "[[T6:[[E42:[[S334:trID]]:days-to-event]]]]",
+        "fullmonth_event_day": "[[E130: [[T8:[[E42:[[S334:trID]]:event-date]]]] dup 0 2 substring
+                    "12"    "December "   replaceall      "11"    "November "   replaceall
+                    "10"    "October "    replaceall      "09"    "September "  replaceall
+                    "08"    "August "     replaceall      "07"    "July "       replaceall
+                    "06"    "June "       replaceall      "05"    "May "        replaceall
+                    "04"    "April "      replaceall      "03"    "March "      replaceall
+                    "02"    "February "   replaceall      "01"    "January "    replaceall
+                    swap 3 5 substring concat             ]]",
+        "future_event": "[[E130: [[T6:[[E42:[[S334:trID]]:days-to-event]]]] -1 > 0 false replaceall 1 true replaceall]]",
+        "slug": "[[E130: [[T6:[[E42:[[S334:trID]]:customized-url]]]]
+                         "http://zerocancer.run" "" replaceall    "https://zerocancer.run" "" replaceall ]]"
+    }
+}
+[[?xx::x[[S334:callback]]x::::)]]
+]]
+]]
+[[?:::::::::::::::::::::::::::::: END ::::::::::::::::::::::::::::::]]]]

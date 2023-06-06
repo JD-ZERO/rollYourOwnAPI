@@ -1,0 +1,19 @@
+[[?x56IMDLQM1OJAaNSAx::x[[S334:key]]x::[[?xx::x[[S334:text]]x::You need to add an fr_id::[[T9:
+
+    *[[E42:[[S334:text]]:city]]* was on *[[E42:[[S334:text]]:event-date]]* and raised *[[E42:[[S334:text]]:dollars]]*
+
+]]]]::Go away!]][[?::::::[[T9:
+
+    [[U8:text/javascript]]{ "results": [[E130:
+    [[T8:[[E450:67063:members]]]] " " concat
+        22 100000000 substring
+        [[T8:67063]] "[" replaceall
+        [[T8:">]] "" replaceall
+        <li> [[T8:"]] replaceall
+        </li> [[T8:", ]] replaceall
+        ", </ul>" "]" replaceall
+    ]]}
+
+    //[[S29:SECURE_DOMAIN]][[S29:SECURE_PATH]]SPageNavigator/ryo_slack?pgwrap=n&token=67063
+    
+]]]]
