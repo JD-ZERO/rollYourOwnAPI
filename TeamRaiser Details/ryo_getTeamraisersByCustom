@@ -13,7 +13,7 @@
   ::  T8 == make a string safe for S130
   ::  T6 == javascript escape
   ::
-  ::  https://support.zerocancer.org/site/SPageNavigator/ryo_getTeamraisersByCustom?pgwrap=n&trID=____
+  ::  [[S11:201]]/ryo_getTeamraisersByCustom?pgwrap=n&trID=[[S334:fr_id]]
   ::
   ::  At some point, might be worth adding a check for an API key or a whitelisted IP header check
   ::  

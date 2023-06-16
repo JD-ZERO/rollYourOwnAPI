@@ -1,13 +1,9 @@
-<script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/luminateExtend/1.8.0/luminateExtend.min.js"></script>
-<script type="text/javascript" src="[[S11:201:unformatted]]/reus_tz_js?pgwrap=n&fr_id=[[S80:trID]][[?[[S8]]::team_zero::&pgname=team_zero::]][[?xx::x[[S334:pg]]x::::&pg=[[S334:pg]]]]&nocache=[[S55:1000,99999]]"></script>
-<script type="text/javascript">Y.use('jquery-noconflict', function(Y) {
-
-// [[?[[S8]]::team_zero:: [[?xtestingx::x[[S334:jd]]x::[[S84:custom/dev/tz.html]]::
+// reformat the base url so it contains the URL slug (for SEO purposes)
   function baseLink(json, page = 'entry', system = 'TR'){
-    if( json["url-slug"] != '' ){ var slug = '/' + json["url-slug"] }
+    if( json["url-slug"] != '' && typeof json["url-slug"] != 'undefined' ){ var slug = '/' + json["url-slug"] }
     return '//support.zerocancer.org/site/' + system + '/endurance' + slug + '?fr_id=' + json["fr-id"] + '&pg=' + page;
   }
+// check for an event icon in [[C1:sponsor_1]], and replace it with text title if undefined
   function eventHeader(json){
     if( json["GP-sponsor_1"] != '' ){
       return '<img src="' + json["GP-sponsor_1"] + '" alt="' + json["GP-event_title"] + '">'
@@ -15,14 +11,15 @@
       return '<div style="padding:3rem 0 2rem">' + json["GP-event_title"] + '</div>'
     }
   }
-  luminateExtend.api({                // open for registration
+// call the normal REST API, filtered to only return events that have open registration
+  luminateExtend.api({
     api: 'teamraiser',
     data: 'method=getTeamraisersByInfo'
       + '&name=%25%25%25'
-      + '&list_category_id=1141'      // TeamZERO
+      + '&list_category_id=1141'      // TeamZERO security category to remove Run/Walk et al events
       + '&list_page_size=100'
       + '&list_filter_column=status'
-      + '&list_filter_text=2'
+      + '&list_filter_text=2'         // accepting registration and gifts
       + '&list_sort_column=event_date'
       + '&list_ascending=true'
       + '',
@@ -30,6 +27,7 @@
       var reply = luminateExtend.utils.ensureArray(data.getTeamraisersResponse.teamraiser);
       $('<h2 id="future">Upcoming Events</h2>').appendTo('#events');
       $.each(reply, function(i, value){
+        // if event still has open registration, but is in the past, don't put it in the "Upcoming Events" box
         var targetElem = ( new Date(this.event_date) >= new Date ) ? 'future' : 'past';
         $.get( 'https://support.zerocancer.org/site/SPageNavigator/ryo_tz_events?pgwrap=n&format=json&fr_id=' + this.id + '&callback=?',
           function(data){ $( '<div class="card ' + data["event-class"] + '">'
@@ -43,7 +41,8 @@
       });
     }
   });
-  luminateExtend.api({                // open for gifts
+// Same as above, but filtered to "accepting gifts only"
+  luminateExtend.api({
     api: 'teamraiser',
     data: 'method=getTeamraisersByInfo'
       + '&name=%25%25%25'
@@ -73,4 +72,3 @@
       });
     }
   });
-// ]]::]]
